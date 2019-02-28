@@ -14,25 +14,22 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-content has-text-centered">
-                  <p class="title article-title">Introducing a new feature for paid subscribers</p>
+                  <p class="title article-title">勉強会アンケートだよ</p>
                   <div class="tags has-addons level-item">
-                    <span class="tag is-rounded is-info">@skeetskeet</span>
-                    <span class="tag is-rounded">May 10, 2018</span>
+                    <span class="tag is-rounded is-info">@oreno enquete</span>
+                    <span class="tag is-rounded">v 1.0.0</span>
                   </div>
                 </div>
               </div>
               <div class="content article-body">
-                <p>hogehoge</p>
-                
-                <h3 class="has-text-left">How to properly center tags in bulma?</h3>
-                <p> Proper centering of tags in bulma is done with class: </p>hogehoge.<p></p>
                 <div class="field">
                   <label class="label">名前</label>
                   <div class="control">
                     <input class="input" type="text" name="name" v-model="answer.name">
                   </div>
-                  <p class="help is-danger" v-show="!validation.name">必須項目だよ</p>
+                  <p class="help is-danger" v-show="!validation.name">書いてね</p>
                 </div>
+                <hr>
 
                 <div class="field">
                   <label class="label">Q.1</label>
@@ -50,6 +47,7 @@
                     <p class="help is-danger" v-show="!validation.level">選択してね</p>
                   </div>
                 </div>
+                <hr>
 
                 <div class="field">
                   <label class="label">Q.2</label>
@@ -86,6 +84,7 @@
                   </div>
                   <p class="help is-danger" v-show="!validation.reasonComment">書いてくだちい (´；ω；｀)</p>
                 </div>
+                <hr>
 
                 <div class="field">
                   <label class="label">Q.3</label>
@@ -98,9 +97,9 @@
                           <input type="checkbox" :id="index" :value="nextTheme.comment" v-model="answer.nextThemes">
                           {{ nextTheme.comment }}
                         </label>
-                        <p class="control" v-if="nextTheme.added">
-                          <button class="button is-light" @click="removeTheme(nextTheme)">消す</button>
-                        </p>
+                        <div class="block" v-if="nextTheme.added">
+                          <button class="delete is-medium" @click="removeTheme(nextTheme)" />
+                        </div>
                       </b-tooltip>
                     </div>
 
@@ -109,11 +108,13 @@
                         <input class="input" type="text" placeholder="他にやりたいテーマがあれば書いてね" v-model="themeText">
                       </p>
                       <p class="control">
-                        <button class="button is-light" @click="addTheme()">追加する</button>
+                        <button class="button is-light" @click="addTheme()">追加するよお</button>
                       </p>
                     </div>
+                    <span class="help is-danger" v-show="themeTextInValid">ちょっと長いかな (;´・ω・)</span>
                   </div>
                 </div>
+                <hr>
 
                 <div class="field">
                   <label class="label">Q.4</label>
@@ -121,12 +122,13 @@
                   <div class="control">
                     <textarea class="textarea" placeholder="適当に書いてね^^" v-model="answer.freeComment"></textarea>
                   </div>
-                  <p class="help is-danger" v-show="!validation.freeComment">多いかな</p>
+                  <p class="help is-danger" v-show="!validation.freeComment">(# ﾟДﾟ) 長すぎッ！</p>
                 </div>
+                <hr>
 
                 <div class="field">
                   <div class="control">
-                    <button @click="registerAnswer()" class="button is-block is-info is-fullwidth">送信する</button>
+                    <button @click="registerAnswer()" class="button is-block is-info is-fullwidth">送信するよ</button>
                   </div>
                 </div>
               </div>
@@ -196,6 +198,9 @@ export default {
         freeComment: (answer.freeComment.length < 1000)
       }
     },
+    themeTextInValid() {
+      return (this.themeText.length > 100)
+    },
     isValid() {
       const validation = this.validation
       return Object.keys(validation).every((key) => {
@@ -229,7 +234,7 @@ export default {
     danger() {
       this.$toast.open({
         duration: 3000,
-        message: `ちゃんと入力できてないよ`,
+        message: `ちゃんと入力できてないよ！`,
         position: 'is-bottom',
         type: 'is-danger'
       })

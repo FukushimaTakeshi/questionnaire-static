@@ -142,6 +142,7 @@
 
 <script>
 import axios from 'axios'
+import qs from 'qs'
 
 export default {
   name: 'app',
@@ -214,8 +215,18 @@ export default {
         this.danger()
         return
       }
-      const res = await axios.post(`/api/hoges`, { answer: this.answer })
-      if (res.status !== 200) { return }
+      await axios.post(`${process.env.VUE_APP_API_BASE_PATH}/questionnaire`, qs.stringify({ answer: this.answer }))
+        .then((res) => {
+          if (res.status === 200) { return }
+        })
+        .catch((res) => {
+          // FIXME: CROS未設定のため、あとで直す
+          this.$toast.open({
+            message: '登録しました',
+            type: 'is-warning'
+          })
+          throw res
+        })
     },
     addTheme() {
       const theme = this.themeText.trim()

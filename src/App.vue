@@ -33,24 +33,53 @@
 
                 <div class="field">
                   <label class="label">Q.1</label>
-                  <p>扱った内容のレベルは?</p>
+                  <p>はじめに、あなたはどのような知識レベルであるか教えてください</p>
                   <p></p>
                   
                   <div class="control">
                     
-                    <div class="field" v-for="(level, index) in levels" :key="index">
+                    <div class="field" v-for="(myLevel, index) in myLevels" :key="index">
                       <label class="radio">
-                        <input type="radio" name="level" :value="level" v-model="answer.level">
-                        {{ level }}
+                        <input type="radio" name="myLevel" :value="myLevel" v-model="answer.myLevel">
+                        {{ myLevel }}
                       </label>
                     </div>
-                    <p class="help is-danger" v-show="!validation.level">選択してね</p>
+
+                    <div class="field has-addons">
+                      <p class="control is-expanded">
+                        <input class="input" type="text" placeholder="あてはまらなかったら追加してね" v-model="myLevelText">
+                      </p>
+                      <p class="control">
+                        <button class="button is-light" @click="addMyLevel()" :disabled="myLevelTextInValid">追加するよお</button>
+                      </p>
+                    </div>
+                    <span class="help is-danger" v-show="myLevelTextInValid">ちょっと長いかな (;´・ω・)</span>
+
+                    <p class="help is-danger" v-show="!validation.myLevel">選択してね</p>
                   </div>
                 </div>
                 <hr>
 
                 <div class="field">
                   <label class="label">Q.2</label>
+                  <p>今回扱った内容のレベルは?</p>
+                  <p></p>
+                  
+                  <div class="control">
+                    
+                    <div class="field" v-for="(studyLevel, index) in studyLevels" :key="index">
+                      <label class="radio">
+                        <input type="radio" name="studyLevel" :value="studyLevel" v-model="answer.studyLevel">
+                        {{ studyLevel }}
+                      </label>
+                    </div>
+                    <p class="help is-danger" v-show="!validation.studyLevel">選択してね</p>
+                  </div>
+                </div>
+                <hr>
+
+                <div class="field">
+                  <label class="label">Q.3</label>
                   <p>全員参加型の輪読会でしたが、自ら積極的に発言できましたか?</p>
                   <p></p>
                   <div class="control">
@@ -65,7 +94,7 @@
                 </div>
 
                 <div class="field" v-if="answer.activeLevel === activeLevels[2] || answer.activeLevel === activeLevels[3]">
-                  <label class="label">Q.2-1</label>
+                  <label class="label">Q.3-1</label>
                   <p>その理由は?</p>
                   <p></p>
                   <div class="control">
@@ -87,7 +116,7 @@
                 <hr>
 
                 <div class="field">
-                  <label class="label">Q.3</label>
+                  <label class="label">Q.4</label>
                   <p>次に輪読会や勉強会に参加するとしたら、どんなテーマがいい？ (複数選択可)</p>
                   <p class="help is-danger" v-show="!validation.nextTheme">選択してね</p>
                   <div class="control">
@@ -108,7 +137,7 @@
                         <input class="input" type="text" placeholder="他にやりたいテーマがあれば書いてね" v-model="themeText">
                       </p>
                       <p class="control">
-                        <button class="button is-light" @click="addTheme()">追加するよお</button>
+                        <button class="button is-light" @click="addTheme()" :disabled="themeTextInValid">追加するよお</button>
                       </p>
                     </div>
                     <span class="help is-danger" v-show="themeTextInValid">ちょっと長いかな (;´・ω・)</span>
@@ -117,7 +146,7 @@
                 <hr>
 
                 <div class="field">
-                  <label class="label">Q.4</label>
+                  <label class="label">Q.5</label>
                   <p>その他、感想や要望など、言いたいことなんでも</p>
                   <div class="control">
                     <textarea class="textarea" placeholder="適当に書いてね^^" v-model="answer.freeComment"></textarea>
@@ -128,13 +157,14 @@
 
                 <div class="field">
                   <div class="control">
-                    <button @click="registerAnswer()" class="button is-block is-info is-fullwidth">送信するよ</button>
+                    <button @click="registerAnswer()" class="button is-block is-info is-fullwidth" :disabled="!isValid">送信するよ</button>
                   </div>
                 </div>
               </div>
             </div>
           </div>
         </div>
+        <b-loading :is-full-page="isFullPage" :active.sync="isLoading" :can-cancel="true"></b-loading>
         </section>
       </div>
     </div>
@@ -148,7 +178,14 @@ export default {
   name: 'app',
   data() {
     return {
-      levels: [
+      myLevels: [
+        'プログラム言語の入門書レベルの文法やクラスやメソッドなどの概念が難しく感じる',
+        'プログラム言語の入門書レベルの文法やクラスやメソッドなどの概念は理解し、実務に使える',
+        'プログラム言語のイディオムや深い理解がある (書籍でいう「Effective ○○」のレベル)',
+        'デザインパターンやDDDなどの設計に関する方法論を知っている',
+        '設計のための方法論を複雑化したコードに適用し、立ち向かうことができる',
+      ],
+      studyLevels: [
         '既に知っていることだった (簡単だった)',
         'ちょうどよかった',
         'ついていくのがやっと',
@@ -172,16 +209,19 @@ export default {
         { comment: '設計に関するテーマ2 (DDD、Clean Architectureのようなもの)', tooltip: '' },
         { comment: '正直、何したらいいかわからない', tooltip: '(´；ω；｀)' }
       ],
+      myLevelText: '',
       themeText: '',
       answer: {
         name: '',
-        level: '',
+        myLevel: '',
+        studyLevel: '',
         activeLevel: '',
         reason: '',
         reasonComment: '',
         nextThemes: [],
         freeComment: ''
-      }
+      },
+      isLoading: false
     }
   },
   computed: {
@@ -191,13 +231,17 @@ export default {
 
       return {
         name: !!answer.name.trim(),
-        level: !!answer.level.trim(),
+        myLevel: !!answer.myLevel.trim(),
+        studyLevel: !!answer.studyLevel.trim(),
         activeLevel: !!answer.activeLevel.trim(),
         reason: (optional ? !!answer.reason.trim() : true),
         reasonComment: (optional ? !!answer.reasonComment.trim() : true),
         nextTheme: !(answer.nextThemes.length === 0),
         freeComment: (answer.freeComment.length < 1000)
       }
+    },
+    myLevelTextInValid() {
+      return (this.myLevelText.length > 100)
     },
     themeTextInValid() {
       return (this.themeText.length > 100)
@@ -215,12 +259,14 @@ export default {
         this.danger()
         return
       }
+      this.isLoading = true
       await axios.post(`${process.env.VUE_APP_API_BASE_PATH}/questionnaire`, qs.stringify({ answer: this.answer }))
         .then((res) => {
-          if (res.status === 200) { return }
+          if (res.status === 200) { this.isLoading = false }
         })
         .catch((res) => {
           // FIXME: CROS未設定のため、あとで直す
+          this.isLoading = false
           this.$toast.open({
             message: '登録しました',
             type: 'is-warning'
@@ -241,6 +287,12 @@ export default {
     removeTheme(item) {
       const index = this.nextThemes.indexOf(item)
       this.nextThemes.splice(index, 1)
+    },
+    addMyLevel() {
+      const myLevel = this.myLevelText.trim()
+      if (!myLevel) { return }
+      this.myLevels.push(myLevel)
+			this.myLevelText = ''
     },
     danger() {
       this.$toast.open({

@@ -1,0 +1,14 @@
+{
+    "dev": {
+        "awscloudformation": {
+            "AuthRoleName": "questionnaire-static-dev-20190521222433-authRole",
+            "UnauthRoleArn": "arn:aws:iam::860018427478:role/questionnaire-static-dev-20190521222433-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::860018427478:role/questionnaire-static-dev-20190521222433-authRole",
+            "Region": "ap-northeast-1",
+            "DeploymentBucketName": "questionnaire-static-dev-20190521222433-deployment",
+            "UnauthRoleName": "questionnaire-static-dev-20190521222433-unauthRole",
+            "StackName": "questionnaire-static-dev-20190521222433",
+            "StackId": "arn:aws:cloudformation:ap-northeast-1:860018427478:stack/questionnaire-static-dev-20190521222433/c5cd62a0-7bcb-11e9-a6e3-0ee87e6fb924"
+        }
+    }
+}

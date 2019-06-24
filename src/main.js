@@ -1,7 +1,10 @@
 import Vue from 'vue'
 import App from './App.vue'
-
 import router from './router.js'
+
+import Buefy from 'buefy'
+import 'buefy/dist/buefy.css'
+Vue.use(Buefy)
 
 import Amplify, * as AmplifyModules from 'aws-amplify';
 import { AmplifyPlugin } from 'aws-amplify-vue';

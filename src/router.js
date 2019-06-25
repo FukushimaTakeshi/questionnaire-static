@@ -1,8 +1,8 @@
 import Vue from 'vue';
 import Router from 'vue-router'
 
-import Question from './Question.vue'
-import Auth from './Auth.vue'
+import Question from './components/Question.vue'
+import Auth from './components/Auth.vue'
 
 Vue.use(Router);
 

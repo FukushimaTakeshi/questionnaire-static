@@ -7,13 +7,13 @@ type Question @model {
   id: ID!
   type: String!
   content: String!
-  sort_no: String
+  sortNo: String
   questionnaire: Question @connection(name: "QuestionnaireQuestions")
-  question_detail: [QuestionDetail] @connection(name: "QuestionQuestionDetails")
+  questionDetail: [QuestionDetail] @connection(name: "QuestionQuestionDetails")
 }
 type QuestionDetail @model {
   id: ID!
   content: String!
-  sort_no: String
+  sortNo: String
   question: Question @connection(name: "QuestionQuestionDetails")
 }

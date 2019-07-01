@@ -1,16 +1,19 @@
-type Blog @model {
+type Questionnaire @model {
   id: ID!
   name: String!
-  posts: [Post] @connection(name: "BlogPosts")
+  questions: [Question] @connection(name: "QuestionnaireQuestions")
 }
-type Post @model {
+type Question @model {
   id: ID!
-  title: String!
-  blog: Blog @connection(name: "BlogPosts")
-  comments: [Comment] @connection(name: "PostComments")
+  type: String!
+  content: String!
+  sort_no: String
+  questionnaire: Question @connection(name: "QuestionnaireQuestions")
+  question_detail: Blog @connection(name: "QuestionQuestionDetails")
 }
-type Comment @model {
+type QuestionDetail @model {
   id: ID!
-  content: String
-  post: Post @connection(name: "PostComments")
+  content: String!
+  sort_no: String
+  question: Question @connection(name: "QuestionQuestionDetails")
 }

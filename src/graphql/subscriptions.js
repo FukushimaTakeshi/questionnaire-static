@@ -57,16 +57,8 @@ export const onCreateQuestion = `subscription OnCreateQuestion {
     sortNo
     questionnaire {
       id
-      type
-      content
-      sortNo
-      questionnaire {
-        id
-        type
-        content
-        sortNo
-      }
-      questionDetail {
+      name
+      questions {
         nextToken
       }
     }
@@ -89,16 +81,8 @@ export const onUpdateQuestion = `subscription OnUpdateQuestion {
     sortNo
     questionnaire {
       id
-      type
-      content
-      sortNo
-      questionnaire {
-        id
-        type
-        content
-        sortNo
-      }
-      questionDetail {
+      name
+      questions {
         nextToken
       }
     }
@@ -121,16 +105,8 @@ export const onDeleteQuestion = `subscription OnDeleteQuestion {
     sortNo
     questionnaire {
       id
-      type
-      content
-      sortNo
-      questionnaire {
-        id
-        type
-        content
-        sortNo
-      }
-      questionDetail {
+      name
+      questions {
         nextToken
       }
     }
@@ -157,9 +133,7 @@ export const onCreateQuestionDetail = `subscription OnCreateQuestionDetail {
       sortNo
       questionnaire {
         id
-        type
-        content
-        sortNo
+        name
       }
       questionDetail {
         nextToken
@@ -180,9 +154,7 @@ export const onUpdateQuestionDetail = `subscription OnUpdateQuestionDetail {
       sortNo
       questionnaire {
         id
-        type
-        content
-        sortNo
+        name
       }
       questionDetail {
         nextToken
@@ -203,9 +175,7 @@ export const onDeleteQuestionDetail = `subscription OnDeleteQuestionDetail {
       sortNo
       questionnaire {
         id
-        type
-        content
-        sortNo
+        name
       }
       questionDetail {
         nextToken

@@ -42,16 +42,8 @@ export const getQuestion = `query GetQuestion($id: ID!) {
     sortNo
     questionnaire {
       id
-      type
-      content
-      sortNo
-      questionnaire {
-        id
-        type
-        content
-        sortNo
-      }
-      questionDetail {
+      name
+      questions {
         nextToken
       }
     }
@@ -79,9 +71,7 @@ export const listQuestions = `query ListQuestions(
       sortNo
       questionnaire {
         id
-        type
-        content
-        sortNo
+        name
       }
       questionDetail {
         nextToken
@@ -103,9 +93,7 @@ export const getQuestionDetail = `query GetQuestionDetail($id: ID!) {
       sortNo
       questionnaire {
         id
-        type
-        content
-        sortNo
+        name
       }
       questionDetail {
         nextToken

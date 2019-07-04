@@ -8,7 +8,7 @@ type Question @model {
   type: QuestionType!
   content: String!
   sortNo: String
-  questionnaire: Question @connection(name: "QuestionnaireQuestions")
+  questionnaire: Questionnaire @connection(name: "QuestionnaireQuestions")
   questionDetail: [QuestionDetail] @connection(name: "QuestionQuestionDetails")
 }
 type QuestionDetail @model {

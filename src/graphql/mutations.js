@@ -57,16 +57,8 @@ export const createQuestion = `mutation CreateQuestion($input: CreateQuestionInp
     sortNo
     questionnaire {
       id
-      type
-      content
-      sortNo
-      questionnaire {
-        id
-        type
-        content
-        sortNo
-      }
-      questionDetail {
+      name
+      questions {
         nextToken
       }
     }
@@ -89,16 +81,8 @@ export const updateQuestion = `mutation UpdateQuestion($input: UpdateQuestionInp
     sortNo
     questionnaire {
       id
-      type
-      content
-      sortNo
-      questionnaire {
-        id
-        type
-        content
-        sortNo
-      }
-      questionDetail {
+      name
+      questions {
         nextToken
       }
     }
@@ -121,16 +105,8 @@ export const deleteQuestion = `mutation DeleteQuestion($input: DeleteQuestionInp
     sortNo
     questionnaire {
       id
-      type
-      content
-      sortNo
-      questionnaire {
-        id
-        type
-        content
-        sortNo
-      }
-      questionDetail {
+      name
+      questions {
         nextToken
       }
     }
@@ -157,9 +133,7 @@ export const createQuestionDetail = `mutation CreateQuestionDetail($input: Creat
       sortNo
       questionnaire {
         id
-        type
-        content
-        sortNo
+        name
       }
       questionDetail {
         nextToken
@@ -180,9 +154,7 @@ export const updateQuestionDetail = `mutation UpdateQuestionDetail($input: Updat
       sortNo
       questionnaire {
         id
-        type
-        content
-        sortNo
+        name
       }
       questionDetail {
         nextToken
@@ -203,9 +175,7 @@ export const deleteQuestionDetail = `mutation DeleteQuestionDetail($input: Delet
       sortNo
       questionnaire {
         id
-        type
-        content
-        sortNo
+        name
       }
       questionDetail {
         nextToken

@@ -5,7 +5,7 @@ type Questionnaire @model {
 }
 type Question @model {
   id: ID!
-  type: String!
+  type: QuestionType!
   content: String!
   sortNo: String
   questionnaire: Question @connection(name: "QuestionnaireQuestions")
@@ -16,4 +16,8 @@ type QuestionDetail @model {
   content: String!
   sortNo: String
   question: Question @connection(name: "QuestionQuestionDetails")
+}
+enum QuestionType {
+  TEXT
+  RADIO
 }

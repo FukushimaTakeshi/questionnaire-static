@@ -62,7 +62,7 @@ export const createQuestion = `mutation CreateQuestion($input: CreateQuestionInp
         nextToken
       }
     }
-    questionDetail {
+    questionDetails {
       items {
         id
         content
@@ -86,7 +86,7 @@ export const updateQuestion = `mutation UpdateQuestion($input: UpdateQuestionInp
         nextToken
       }
     }
-    questionDetail {
+    questionDetails {
       items {
         id
         content
@@ -110,7 +110,7 @@ export const deleteQuestion = `mutation DeleteQuestion($input: DeleteQuestionInp
         nextToken
       }
     }
-    questionDetail {
+    questionDetails {
       items {
         id
         content
@@ -135,7 +135,7 @@ export const createQuestionDetail = `mutation CreateQuestionDetail($input: Creat
         id
         name
       }
-      questionDetail {
+      questionDetails {
         nextToken
       }
     }
@@ -156,7 +156,7 @@ export const updateQuestionDetail = `mutation UpdateQuestionDetail($input: Updat
         id
         name
       }
-      questionDetail {
+      questionDetails {
         nextToken
       }
     }
@@ -177,7 +177,7 @@ export const deleteQuestionDetail = `mutation DeleteQuestionDetail($input: Delet
         id
         name
       }
-      questionDetail {
+      questionDetails {
         nextToken
       }
     }

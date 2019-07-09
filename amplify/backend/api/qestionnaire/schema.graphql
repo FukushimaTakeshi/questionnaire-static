@@ -7,14 +7,14 @@ type Question @model {
   id: ID!
   type: QuestionType!
   content: String!
-  sortNo: String
+  sortNo: Int
   questionnaire: Questionnaire @connection(name: "QuestionnaireQuestions")
-  questionDetail: [QuestionDetail] @connection(name: "QuestionQuestionDetails")
+  questionDetails: [QuestionDetail] @connection(name: "QuestionQuestionDetails")
 }
 type QuestionDetail @model {
   id: ID!
   content: String!
-  sortNo: String
+  sortNo: Int
   question: Question @connection(name: "QuestionQuestionDetails")
 }
 enum QuestionType {

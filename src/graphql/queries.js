@@ -47,7 +47,7 @@ export const getQuestion = `query GetQuestion($id: ID!) {
         nextToken
       }
     }
-    questionDetail {
+    questionDetails {
       items {
         id
         content
@@ -73,7 +73,7 @@ export const listQuestions = `query ListQuestions(
         id
         name
       }
-      questionDetail {
+      questionDetails {
         nextToken
       }
     }
@@ -95,7 +95,7 @@ export const getQuestionDetail = `query GetQuestionDetail($id: ID!) {
         id
         name
       }
-      questionDetail {
+      questionDetails {
         nextToken
       }
     }

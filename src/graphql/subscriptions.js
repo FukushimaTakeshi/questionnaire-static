@@ -62,7 +62,7 @@ export const onCreateQuestion = `subscription OnCreateQuestion {
         nextToken
       }
     }
-    questionDetail {
+    questionDetails {
       items {
         id
         content
@@ -86,7 +86,7 @@ export const onUpdateQuestion = `subscription OnUpdateQuestion {
         nextToken
       }
     }
-    questionDetail {
+    questionDetails {
       items {
         id
         content
@@ -110,7 +110,7 @@ export const onDeleteQuestion = `subscription OnDeleteQuestion {
         nextToken
       }
     }
-    questionDetail {
+    questionDetails {
       items {
         id
         content
@@ -135,7 +135,7 @@ export const onCreateQuestionDetail = `subscription OnCreateQuestionDetail {
         id
         name
       }
-      questionDetail {
+      questionDetails {
         nextToken
       }
     }
@@ -156,7 +156,7 @@ export const onUpdateQuestionDetail = `subscription OnUpdateQuestionDetail {
         id
         name
       }
-      questionDetail {
+      questionDetails {
         nextToken
       }
     }
@@ -177,7 +177,7 @@ export const onDeleteQuestionDetail = `subscription OnDeleteQuestionDetail {
         id
         name
       }
-      questionDetail {
+      questionDetails {
         nextToken
       }
     }

@@ -11,6 +11,14 @@ export const getQuestionnaire = `query GetQuestionnaire($id: ID!) {
         type
         content
         sortNo
+        questionDetails {
+          items {
+            id
+            content
+            sortNo
+          }
+          nextToken
+        }
       }
       nextToken
     }

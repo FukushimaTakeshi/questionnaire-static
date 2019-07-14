@@ -14,7 +14,7 @@
             <div class="card-content">
               <div class="media">
                 <div class="media-content has-text-centered">
-                  <p class="title article-title">勉強会アンケートだよ</p>
+                  <p class="title article-title">{{ questionnaires.name }}</p>
                   <div class="tags has-addons level-item">
                     <span class="tag is-rounded is-info">@oreno enquete</span>
                     <span class="tag is-rounded">v 1.0.0</span>
@@ -31,17 +31,21 @@
                 </div>
                 <hr>
 
-                <div class="field">
-                  <label class="label">Q.1</label>
-                  <p>はじめに、あなたはどのような知識レベルであるか教えてください</p>
+                <div class="field" v-for="(question, index) in questions" :key="index">
+                  <label class="label">Q.{{ index + 1 }}</label>
+                  <p>{{ question.content }}</p>
                   <p></p>
-                  
-                  <div class="control">
-                    
-                    <div class="field" v-for="(myLevel, index) in myLevels" :key="index">
+
+                  <div v-if="question.type === 'TEXT'" class="control">
+                    <textarea class="textarea" placeholder="適当に書いてね^^" v-model="answer.freeComment"></textarea>
+                    <p class="help is-danger" v-show="!validation.freeComment">(# ﾟДﾟ) 長すぎッ！</p>
+                  </div>
+
+                  <div v-else-if="question.type === 'RADIO'" class="control">
+                    <div class="field" v-for="(questionDetail, index) in question.questionDetails" :key="index">
                       <label class="radio">
-                        <input type="radio" name="myLevel" :value="myLevel" v-model="answer.myLevel">
-                        {{ myLevel }}
+                        <input type="radio" name="myLevel" :value="questionDetail.id" v-model="answer.myLevel">
+                        {{ questionDetail.content }}
                       </label>
                     </div>
 
@@ -57,8 +61,8 @@
 
                     <p class="help is-danger" v-show="!validation.myLevel">選択してね</p>
                   </div>
+                  <hr>
                 </div>
-                <hr>
 
                 <div class="field">
                   <label class="label">Q.2</label>
@@ -174,10 +178,15 @@
 import axios from 'axios'
 import qs from 'qs'
 
+import { API, graphqlOperation} from 'aws-amplify'
+import * as queries from '@/graphql/queries'
+
 export default {
   name: 'app',
   data() {
     return {
+      questionnaires: Object,
+      questions: [],
       isFullPage: '',
       myLevels: [
         'プログラム言語の入門書レベルの文法やクラスやメソッドなどの概念が難しく感じる',
@@ -224,6 +233,28 @@ export default {
       },
       isLoading: false
     }
+  },
+  mounted: async function() {
+    let questionnaires = await API.graphql(graphqlOperation(queries.getQuestionnaire, { id: 1 }))
+      .catch(err => console.error(err))
+    this.questionnaires = questionnaires.data.getQuestionnaire
+    this.questions = questionnaires.data.getQuestionnaire.questions.items.sort((a, b) =>
+      a.sortNo - b.sortNo
+    ).map(question => 
+      ({
+        id: question.id,
+        content: question.content,
+        type: question.type,
+        questionDetails: question.questionDetails.items.sort((a, b) =>
+          a.sortNo - b.sortNo
+        ).map(questionDetail => 
+          ({
+            id: questionDetail.id,
+            content: questionDetail.content
+          })
+        )
+      })
+    )
   },
   computed: {
     validation() {
